@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#fff4f8">
+  <meta name="description" content="Track daily expenses, manage your budget, and review spending by category.">
+  <link rel="manifest" href="manifest.webmanifest?v=6">
+  <link rel="icon" href="icons/icon.png?v=6" type="image/png">
+  <link rel="apple-touch-icon" href="icons/icon.png?v=6">
+  <link rel="stylesheet" href="style.css?v=6">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="page-header">
+      <div>
+        <h1>Daily Expenses Tracker</h1>
+        <p class="subtitle">Track spending and stay within your budget.</p>
+      </div>
+      <div class="header-actions">
+        <div class="date-badge" id="todayLabel" aria-label="Today"></div>
+        <div class="action-buttons">
+          <button class="button button-soft" id="installButton" type="button">Install app</button>
+          <button class="button button-soft" id="notificationButton" type="button">Enable notifications</button>
+        </div>
+      </div>
+    </header>
+    <p class="app-message" id="appMessage" role="status" aria-live="polite" hidden></p>
+
+    <section class="budget-panel" aria-labelledby="budget-heading">
+      <div>
+        <h2 id="budget-heading">Set your daily budget</h2>
+        <p class="muted">Set a spending limit for today.</p>
+      </div>
+      <form class="budget-form" id="budgetForm">
+        <label class="sr-only" for="budgetInput">Daily budget in Philippine pesos</label>
+        <div class="input-with-prefix">
+          <span>₱</span>
+          <input id="budgetInput" type="number" min="0" step="0.01" placeholder="500.00" required>
+        </div>
+        <button class="button button-primary" type="submit">Save budget</button>
+      </form>
+    </section>
+
+    <section class="stats-grid" aria-label="Expense summary">
+      <article class="stat-card budget-card">
+        <div class="stat-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" focusable="false"><path d="M6 9h19a3 3 0 0 1 3 3v13H6a3 3 0 0 1-3-3V8a4 4 0 0 1 4-4h17v5H7a2 2 0 0 0-1 0Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M21 15h7v6h-7a3 3 0 0 1 0-6Z" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="22" cy="18" r="1" fill="currentColor"/></svg>
+        </div>
+        <div><p>Daily Budget</p><strong id="budgetDisplay">₱0.00</strong></div>
+      </article>
+      <article class="stat-card spent-card">
+        <div class="stat-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" focusable="false"><path d="M6 23 13 16l5 4 9-11" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/><path d="M20 9h7v7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"/><path d="M5 27h23" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"/></svg>
+        </div>
+        <div><p>Total Spent</p><strong id="totalDisplay">₱0.00</strong></div>
+      </article>
+      <article class="stat-card remaining-card">
+        <div class="stat-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" focusable="false"><path d="M16 3v26M23 8c-1.5-2-4-3-7-3-4 0-7 2-7 5s3 5 7 6 7 3 7 6-3 5-7 5c-3 0-6-1-7-3" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"/></svg>
+        </div>
+        <div><p>Remaining Budget</p><strong id="remainingDisplay">₱0.00</strong></div>
+      </article>
+      <article class="stat-card count-card">
+        <div class="stat-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" focusable="false"><path d="M9 4h14v24H9z" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M13 11h7M13 16h7M13 21h5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"/><path d="M12 4V2h8v2" fill="none" stroke="currentColor" stroke-width="2.5"/></svg>
+        </div>
+        <div><p>Number of Expenses</p><strong id="countDisplay">0</strong></div>
+      </article>
+    </section>
+
+    <section class="content-grid">
+      <div class="panel form-panel">
+        <div class="panel-heading"><h2>Add New Expense</h2></div>
+        <form id="expenseForm" class="expense-form">
+          <div class="field full-width">
+            <label for="expenseName">Expense name</label>
+            <input id="expenseName" type="text" placeholder="e.g. Pamasahe" required>
+          </div>
+          <div class="field">
+            <label for="expenseAmount">Amount</label>
+            <div class="input-with-prefix"><span>₱</span><input id="expenseAmount" type="number" min="0.01" step="0.01" placeholder="0.00" required></div>
+          </div>
+          <div class="field">
+            <label for="expenseCategory">Category</label>
+            <select id="expenseCategory" required>
+              <option value="" disabled selected>Choose category</option>
+              <option>Food</option>
+              <option>Transportation</option>
+              <option>School</option>
+              <option>Entertainment</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field full-width">
+            <label for="expenseDate">Date</label>
+            <input id="expenseDate" type="date" required>
+          </div>
+          <button class="button button-dark full-width" type="submit">Add expense</button>
+        </form>
+      </div>
+
+      <div class="panel category-panel">
+        <div class="panel-heading"><h2>Spending by Category</h2></div>
+        <div id="categoryList" class="category-list"></div>
+      </div>
+    </section>
+
+    <section class="panel history-panel" aria-labelledby="history-heading">
+      <div class="panel-heading history-heading">
+        <h2 id="history-heading">Expense History</h2>
+        <span id="historyCount" class="small-count">0 expenses</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Expense</th><th>Category</th><th>Amount</th><th>Date</th><th><span class="sr-only">Action</span></th></tr></thead>
+          <tbody id="expenseTableBody"></tbody>
+        </table>
+        <div id="emptyState" class="empty-state"><h3>No expenses recorded</h3><p>Add an expense to see it in your history.</p></div>
+      </div>
+    </section>
+
+    <footer>Your expense data is saved locally on this device.</footer>
+  </main>
+  <script src="script.js?v=6"></script>
+</body>
+</html>
