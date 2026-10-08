@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#fff4f8">
+  <meta name="description" content="Build your savings with automatic budget contributions and personal goals.">
+  <link rel="manifest" href="manifest.webmanifest?v=6">
+  <link rel="icon" href="icons/icon.png?v=6" type="image/png">
+  <link rel="stylesheet" href="style.css?v=15">
+  <title>Savings &amp; Goals | Daily Expenses Tracker</title>
+</head>
+<body>
+  <main class="app-shell savings-shell">
+    <header class="page-header savings-page-header">
+      <div>
+        <h1>Savings &amp; Goals</h1>
+        <p class="subtitle">Small steps today, a little closer to your goal.</p>
+      </div>
+      <a class="button button-soft back-link" href="./index.html">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m14.5 5-7 7 7 7M8 12h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to tracker
+      </a>
+    </header>
+
+    <p class="app-message" id="savingsMessage" role="status" aria-live="polite" hidden></p>
+
+    <section class="savings-overview" aria-labelledby="savings-overview-heading">
+      <div class="savings-overview-top">
+        <div>
+          <p class="savings-eyebrow">Your savings</p>
+          <h2 id="savings-overview-heading"><span id="savingsTotal">₱0.00</span></h2>
+        </div>
+        <div class="savings-coin" aria-hidden="true">
+          <svg viewBox="0 0 32 32" focusable="false"><path d="M16 3v26M23 8c-1.5-2-4-3-7-3-4 0-7 2-7 5s3 5 7 6 7 3 7 6-3 5-7 5c-3 0-6-1-7-3" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+      <div class="savings-progress-copy">
+        <span id="savingsProgressLabel">Set a goal to track your progress</span>
+        <strong id="savingsProgressPercent">0%</strong>
+      </div>
+      <div class="savings-progress-track" role="progressbar" aria-label="Savings goal progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="savingsProgress">
+        <div class="savings-progress-bar" id="savingsProgressBar"></div>
+      </div>
+      <p class="savings-goal-caption" id="savingsGoalCaption">5% of each saved daily budget goes here automatically.</p>
+    </section>
+
+    <section class="savings-actions-grid" aria-label="Savings actions">
+      <div class="panel savings-action-panel">
+        <div class="panel-heading">
+          <h2>Your savings goal</h2>
+        </div>
+        <form id="savingsGoalForm" class="savings-form">
+          <div class="field">
+            <label for="savingsGoalInput">Goal amount</label>
+            <div class="input-with-prefix"><span>₱</span><input id="savingsGoalInput" type="number" min="0.01" step="0.01" placeholder="10000.00" required></div>
+          </div>
+          <button class="button button-primary" type="submit">Save goal</button>
+        </form>
+      </div>
+
+      <div class="panel savings-action-panel">
+        <div class="panel-heading">
+          <h2>Add to savings</h2>
+        </div>
+        <form id="savingsAddForm" class="savings-form">
+          <div class="field">
+            <label for="savingsAddInput">Amount to add</label>
+            <div class="input-with-prefix"><span>₱</span><input id="savingsAddInput" type="number" min="0.01" step="0.01" placeholder="100.00" required></div>
+          </div>
+          <button class="button button-dark" type="submit">Add savings</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="panel savings-history-panel" aria-labelledby="savings-history-heading">
+      <div class="panel-heading history-heading">
+        <h2 id="savings-history-heading">Savings activity</h2>
+        <span class="small-count" id="savingsEntryCount">0 deposits</span>
+      </div>
+      <div id="savingsHistory" class="savings-history">
+        <div class="empty-state" id="savingsEmptyState">
+          <h3>Your savings journey starts here</h3>
+          <p>Set a daily budget or add to savings to see your activity.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>Your savings are stored locally on this device.</footer>
+  </main>
+  <script src="savings.js?v=15"></script>
+</body>
+</html>

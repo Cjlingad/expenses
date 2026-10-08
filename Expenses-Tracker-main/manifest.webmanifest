@@ -1,0 +1,27 @@
+{
+  "id": "./",
+  "name": "Daily Expenses Tracker",
+  "short_name": "Expenses Tracker",
+  "description": "Track daily expenses, manage your budget, and review spending by category.",
+  "lang": "en",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fff4f8",
+  "theme_color": "#fff4f8",
+  "icons": [
+    {
+      "src": "./icons/penny-petal-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
